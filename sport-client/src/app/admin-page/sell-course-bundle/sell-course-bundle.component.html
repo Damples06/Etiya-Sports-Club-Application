@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>Sell Course Bundle</h2>
+
+  <!-- Input for User ID -->
+  <div class="form-group">
+<!--    <label for="userId">User ID:</label>-->
+    <input id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID" required>
+    <button class="btn btn-primary" (click)="sellBundle()">Sell Course Bundle</button>
+  </div>
+
+  <!-- Display the success or error message -->
+  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
+    {{ message }}
+  </div>
+</div>
+

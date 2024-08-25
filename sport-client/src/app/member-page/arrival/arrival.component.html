@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>Get Arrivals</h2>
+  <div class="form-group">
+<!--    <input id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID" required>-->
+    <button class="btn btn-primary mt-2" (click)="fetchArrivals()">Get Arrivals</button>
+  </div>
+  <div *ngIf="message" class="alert alert-danger mt-3">{{ message }}</div>
+  <table class="table mt-3" *ngIf="arrivals.length">
+    <thead>
+    <tr>
+      <th>Arrival ID</th>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let arrival of arrivals">
+      <td>{{ arrival.id }}</td>
+      <td>{{ arrival.date | date: 'shortDate' }}</td>
+      <td>{{ arrival.status }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

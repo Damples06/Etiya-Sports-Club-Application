@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>Get Course Bundles</h2>
+  <div class="form-group">
+<!--    <input id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID" required>-->
+    <button class="btn btn-primary" (click)="fetchCourseBundles()">Get Course Bundles</button>
+  </div>
+  <div *ngIf="message" class="alert alert-danger">{{ message }}</div>
+  <table class="table" *ngIf="courseBundles.length">
+    <thead>
+    <tr>
+      <th>Course Bundle ID</th>
+      <th>Total Courses</th>
+      <th>Remaining Courses</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let courseBundle of courseBundles">
+      <td>{{ courseBundle.id }}</td>
+      <td>{{ courseBundle.totalCourse }}</td>
+      <td>{{ courseBundle.remainingCourses }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

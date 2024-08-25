@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Users by Remaining Course</h2>
+
+  <!-- Input for Filtering by Remaining Courses -->
+  <div class="form-group">
+    <input
+      id="remainingCourses"
+      class="form-control"
+      [(ngModel)]="remainingCourses"
+      placeholder="Enter value of remaining courses"
+      required
+    />
+    <button class="btn btn-primary" (click)="fetchUsers()">Filter Users</button>
+  </div>
+
+  <!-- Display the success or error message -->
+  <div
+    *ngIf="message"
+    class="alert"
+    [ngClass]="{ 'alert-success': isSuccess, 'alert-danger': !isSuccess }"
+  >
+    {{ message }}
+  </div>
+
+  <!-- Table to Display Users -->
+  <table class="users-by-remaining-course-table" *ngIf="users$ | async as users">
+    <thead>
+    <tr>
+      <th>User ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Course Bundle ID</th>
+      <th>Remaining Courses</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.userId }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.lastName }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.courseBundleId }}</td>
+      <td>{{ user.remainingCourse }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

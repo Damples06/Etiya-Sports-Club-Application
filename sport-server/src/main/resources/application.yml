@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: sportsClubApplication
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/etiya
+    username: postgres
+    password: Degerli06.
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 7575

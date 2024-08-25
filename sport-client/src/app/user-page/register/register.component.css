@@ -1,0 +1,90 @@
+/* General Form Container Styling */
+.form-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Title */
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.form-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* Input Fields */
+.form-input {
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  font-size: 16px;
+  color: var(--text-color);
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: var(--secondary-color);
+  outline: none;
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+}
+
+/* Button */
+.btn-submit {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Alerts */
+.alert {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alert-danger {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.alert-info {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+/* Placeholder Styling */
+.form-input::placeholder {
+  color: #7f8c8d;
+  font-style: italic;
+}

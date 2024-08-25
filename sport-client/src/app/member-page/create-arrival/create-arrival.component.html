@@ -1,0 +1,12 @@
+<div class="container">
+  <h2>Create Arrival</h2>
+  <div class="form-group">
+<!--    <input id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID" required>-->
+    <input id="date" class="form-control" [(ngModel)]="date" placeholder="Enter Date (YYYY-MM-DD)" required>
+    <input id="courseBundleId" class="form-control" [(ngModel)]="courseBundleId" placeholder="Enter Course Bundle ID" required>
+    <button class="btn btn-primary" (click)="createArrival()">Create Arrival</button>
+  </div>
+  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
+    {{ message }}
+  </div>
+</div>

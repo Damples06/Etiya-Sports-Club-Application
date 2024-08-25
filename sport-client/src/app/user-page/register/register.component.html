@@ -1,0 +1,80 @@
+<!--<div class="container">-->
+<!--  <h2 class="form-title">Save User</h2>-->
+<!--  <form (ngSubmit)="saveUser()" #userForm="ngForm" class="user-form">-->
+<!--    <div class="form-group">-->
+<!--      <label for="firstName">First Name</label>-->
+<!--      <input type="text" id="firstName" required [(ngModel)]="user.firstName" name="firstName" class="form-control">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="lastName">Last Name</label>-->
+<!--      <input type="text" id="lastName" required [(ngModel)]="user.lastName" name="lastName" class="form-control">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="email">Email</label>-->
+<!--      <input type="email" id="email" required [(ngModel)]="user.email" name="email" class="form-control">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="password">Password</label>-->
+<!--      <input type="password" id="password" required [(ngModel)]="user.password" name="password" class="form-control">-->
+<!--    </div>-->
+<!--    <button type="submit" class="btn">Save User</button>-->
+<!--    <div *ngIf="notification" class="notification">{{ notification }}</div>-->
+<!--  </form>-->
+<!--</div>-->
+<div class="form-container">
+  <h2 class="form-title">Register</h2>
+  <form (ngSubmit)="saveUser()" #registerForm="ngForm" class="register-form">
+    <div class="form-group">
+      <label for="firstName" class="form-label">First Name</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        [(ngModel)]="user.firstName"
+        required
+        class="form-input"
+        placeholder="Enter your first name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        [(ngModel)]="user.lastName"
+        required
+        class="form-input"
+        placeholder="Enter your last name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="user.email"
+        required
+        class="form-input"
+        placeholder="Enter your email"
+      />
+    </div>
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="user.password"
+        required
+        class="form-input"
+        placeholder="Enter your password"
+      />
+    </div>
+    <button class="btn btn-submit" type="submit">Register</button>
+  </form>
+  <div *ngIf="notification" class="alert alert-info">
+    {{ notification }}
+  </div>
+</div>
