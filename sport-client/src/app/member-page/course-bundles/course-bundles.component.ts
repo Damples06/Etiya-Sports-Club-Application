@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {MemberService} from "../../service/member.service";
-import {catchError, throwError} from "rxjs";
 import {UserService} from "../../service/user.service";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-course-bundles',
@@ -20,35 +19,29 @@ import {UserService} from "../../service/user.service";
 export class CourseBundlesComponent {
   userId: number | null = null;
   courseBundles: any[] = [];
-  message!: string;
 
-  constructor(private memberService: MemberService, private userService: UserService ) {}
+  constructor(private memberService: MemberService, private userService: UserService, private notificationService: NotificationService) {}
 
   fetchCourseBundles() {
     this.userId = this.userService.getUserId();
     if (this.userId === null) {
-      this.message = 'User ID is not available. Please log in.';
+      this.notificationService.showNotification('User ID is not available. Please log in.', 'green', 3000, 'warning')
       return;
     }
 
     this.memberService.getCourseBundles(this.userId)
-      .pipe(
-        catchError((error: any) => {
-          if (error.status === 404) {
-            this.message = 'No course bundles found for this user';
-          } else {
-            this.message = 'Error fetching course bundles';
-          }
-          return throwError(() => error);  // Propagate the error if necessary
-        })
-      )
       .subscribe({
         next: (response) => {
           this.courseBundles = response;
-          this.message = this.courseBundles.length ? '' : 'No course bundles found';
+          this.notificationService.showNotification('Arrivals retrieved successfully!', 'green', 3000, 'success')
         },
-        error: () => {
+        error: (error) => {
           // Error handling is already done in the pipe, no need to handle it again here.
+          if (error.status === 404) {
+            this.notificationService.showNotification('Arrivals not found!', 'green', 3000, 'info')
+          } else {
+            this.notificationService.showNotification('An error occurred during fetching arrivals', 'green', 3000, 'error')
+          }
         }
       });
   }

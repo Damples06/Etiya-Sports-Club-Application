@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
 import {MemberService} from "../../service/member.service";
-import {catchError, throwError} from "rxjs";
 import {UserService} from "../../service/user.service";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-delete-arrival',
@@ -20,36 +19,25 @@ import {UserService} from "../../service/user.service";
 export class DeleteArrivalComponent {
   userId: number | null = null;
   arrivalId!: number;
-  message!: string;
   isSuccess!: boolean;
 
-  constructor(private memberService: MemberService, private userService: UserService) {}
+  constructor(private memberService: MemberService, private userService: UserService, private notificationService: NotificationService) {}
 
   deleteArrival() {
     this.userId = this.userService.getUserId();
     if (this.userId === null) {
-      this.message = 'User ID is not available. Please log in.';
+      this.notificationService.showNotification('User ID is not available. Please log in.', 'green', 3000, 'warning')
       return;
     }
     this.memberService.deleteArrival(this.userId,this.arrivalId)
-      .pipe(
-        catchError((error: any) => {
-          if (error.status === 404) {
-            this.message = 'Arrival not found';
-          } else {
-            this.message = 'Error deleting arrival';
-          }
-          this.isSuccess = false;
-          return throwError(() => error);  // Propagate the error if necessary
-        })
-      )
       .subscribe({
         next: (response) => {
-          this.message = <string>response.body;
+          this.notificationService.showNotification(<string>response.body, 'green', 3000, 'success')
           this.isSuccess = true;
         },
         error: () => {
-          // Error handling is already done in the pipe, no need to handle it again here.
+          this.notificationService.showNotification('An error occurred during deleting arrival', 'green', 3000, 'error')
+          this.isSuccess = false;
         }
       });
   }

@@ -5,7 +5,4 @@
     <input type="number" id="courseBundleId" class="form-control" [(ngModel)]="courseBundleId" placeholder="Enter Course Bundle ID" required>
     <button class="btn btn-primary" (click)="createArrival()">Create Arrival</button>
   </div>
-  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
-    {{ message }}
-  </div>
 </div>

@@ -3,7 +3,6 @@
   <div class="form-group">
     <button class="btn btn-primary" (click)="fetchCourseBundles()">Get Course Bundles</button>
   </div>
-  <div *ngIf="message" class="alert alert-danger">{{ message }}</div>
   <table class="table" *ngIf="courseBundles.length">
     <thead>
     <tr>

@@ -3,11 +3,6 @@
 
   <button class="btn btn-primary" (click)="fetchUsersWithoutCourseBundle()">Show Users</button>
 
-  <!-- Display the success or error message -->
-  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
-    {{ message }}
-  </div>
-
   <!-- Display the table only when showTable is true -->
   <table *ngIf="users$" class="table table-striped">
     <thead>

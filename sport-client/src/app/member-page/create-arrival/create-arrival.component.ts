@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgIf} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
 import {MemberService} from "../../service/member.service";
-import {catchError, throwError} from "rxjs";
 import {UserService} from "../../service/user.service";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-create-arrival',
@@ -21,15 +20,14 @@ export class CreateArrivalComponent {
   userId: number | null = null;
   date!: string;
   courseBundleId!: number;
-  message!: string;
   isSuccess!: boolean;
 
-  constructor(private memberService: MemberService, private userService: UserService) {}
+  constructor(private memberService: MemberService, private userService: UserService, private notificationService: NotificationService) {}
 
   createArrival() {
     this.userId = this.userService.getUserId();
     if (this.userId === null) {
-      this.message = 'User ID is not available. Please log in.';
+      this.notificationService.showNotification('User ID is not available. Please log in.', 'green', 3000, 'warning')
       return;
     }
 
@@ -40,24 +38,14 @@ export class CreateArrivalComponent {
     };
 
     this.memberService.createArrival(arrivalRequest)
-      .pipe(
-        catchError((error: any) => {
-          if (error.status === 404) {
-            this.message = 'Course bundle or user not found';
-          } else {
-            this.message = 'Error creating arrival';
-          }
-          this.isSuccess = false;
-          return throwError(() => error);  // Propagate the error if necessary
-        })
-      )
       .subscribe({
         next: (response) => {
-          this.message = <string>response.body;
+          this.notificationService.showNotification(<string>response.body, 'green', 3000, 'success')
           this.isSuccess = true;
         },
         error: () => {
-          // Error handling is already done in the pipe, no need to handle it again here.
+          this.notificationService.showNotification('An error occurred during creating arrival', 'green', 3000, 'error')
+          this.isSuccess = false;
         }
     });
   }

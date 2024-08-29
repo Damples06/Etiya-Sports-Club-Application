@@ -21,8 +21,7 @@ export class LoginComponent {
     email: '',
     password: ''
   };
-  errorMessage: string | null = null;
-  notification: string | null = null;
+  // notification: string | null = null;
 
   constructor(private userService: UserService, private notificationService: NotificationService) {}
 
@@ -37,7 +36,7 @@ export class LoginComponent {
             this.notificationService.showNotification('login successfully!', 'orange', 3000, "success");
             this.userService.notifyLoginStatusChange();
           } else {
-            this.notification = 'Failed to login. No token received';
+            this.notificationService.showNotification('Failed to login. No token received', 'red', 3000, "error")
           }
         }
       },
@@ -47,7 +46,7 @@ export class LoginComponent {
           this.notificationService.showNotification('Email or password is incorrect', 'orange', 3000, "warning");
         } else {
           console.error('login error', error);
-          this.notificationService.showNotification('An error occured during logging in', 'red', 3000, "error");
+          this.notificationService.showNotification('An error occurred during logging in', 'red', 3000, "error");
         }
       }
     });

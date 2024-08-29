@@ -5,6 +5,7 @@ import { AdminService } from '../../service/admin.service';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
 import { CommonModule } from '@angular/common';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-all-calendar',
@@ -23,11 +24,10 @@ export class AllCalendarComponent {
   arrivals: Arrival[] = [];
   daysInMonth: Date[] = [];
   arrivalsByDate: { [key: string]: Arrival[] } = {};
-  message: string | null = null;
   isSuccess: boolean = false;
   showCalendar: boolean = false;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private notificationService: NotificationService) {}
 
   fetchArrivals(): void {
     this.arrivals$ = this.adminService.getCalendar();
@@ -35,20 +35,20 @@ export class AllCalendarComponent {
     this.arrivals$.subscribe({
       next: (response) => {
         if (response.length > 0) {
+          this.notificationService.showNotification('Arrivals fetched successfully', 'green', 3000, 'success')
           this.arrivals = response;
-          this.message = 'Arrivals retrieved successfully!';
           this.isSuccess = true;
           this.showCalendar = true;
           this.generateCalendar();
         } else {
-          this.message = 'No arrivals found for the selected period.';
+          this.notificationService.showNotification('There is no data', '', 3000, 'info')
           this.isSuccess = false;
           this.showCalendar = false;
         }
       },
       error: (error) => {
         console.error('Error fetching arrivals:', error);
-        this.message = `Error: ${error.status} - ${error.message}`;
+        this.notificationService.showNotification('An error occurred during fetching arrivals', 'red', 3000, 'warning')
         this.isSuccess = false;
         this.showCalendar = false;
       }

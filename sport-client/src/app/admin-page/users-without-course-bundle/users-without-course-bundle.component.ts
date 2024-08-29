@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {AdminService} from "../../service/admin.service";
 import {Observable} from "rxjs";
-import {User} from "../../models/user";
 import {UserBasic} from "../../models/user-basic";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-users-without-course-bundle',
@@ -19,11 +19,9 @@ import {UserBasic} from "../../models/user-basic";
 })
 export class UsersWithoutCourseBundleComponent {
   users$!: Observable<UserBasic[]>;
-  message!: string | null;
   isSuccess!: boolean;
-  showTable: boolean = false;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private notificationService: NotificationService) {}
 
   fetchUsersWithoutCourseBundle() {
     this.users$ = this.adminService.getUsersWithoutCourse();
@@ -31,36 +29,18 @@ export class UsersWithoutCourseBundleComponent {
     this.users$.subscribe({
       next: (response) => {
         if (response.length > 0) {
-          this.message = 'Users retrieved successfully!';
+          this.notificationService.showNotification('Users retrieved successfully!', 'green', 3000, 'success')
           this.isSuccess = true;
         } else {
-          this.message = 'No users found with the specified remaining courses.';
+          this.notificationService.showNotification('No users found with the specified remaining courses.', 'green', 3000, 'info')
           this.isSuccess = false;
         }
       },
       error: (error) => {
         console.error('Error fetching users:', error);
-        this.message = `Error: ${error.status} - ${error.message}`;
+        this.notificationService.showNotification('An error occurred during fetching users', 'green', 3000, 'error')
         this.isSuccess = false;
       }
-
-      // next: (response) => {
-      //   if (response.length > 0) {
-      //     this.message = 'Users retrieved successfully!';
-      //     this.isSuccess = true;
-      //     this.showTable = true;
-      //   } else {
-      //     this.message = 'No users found without a course bundle.';
-      //     this.isSuccess = false;
-      //     this.showTable = false;
-      //   }
-      // },
-      // error: (error) => {
-      //   console.error('Error fetching users:', error);
-      //   this.message = `Error: ${error.status} - ${error.message}`;
-      //   this.isSuccess = false;
-      //   this.showTable = false;
-      // }
     });
   }
 }

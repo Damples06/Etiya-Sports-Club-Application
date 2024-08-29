@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import {AdminService} from "../../service/admin.service";
 import {NgClass, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {catchError, map, of, tap, throwError} from "rxjs";
-import {HttpResponse} from "@angular/common/http";
+import {catchError, of} from "rxjs";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-sell-course-bundle',
@@ -18,19 +18,18 @@ import {HttpResponse} from "@angular/common/http";
 })
 export class SellCourseBundleComponent {
   userId!: number;
-  message!: string | null;
   isSuccess!: boolean;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private notificationService: NotificationService) { }
 
   sellBundle() {
     this.adminService.sellCourseBundle(this.userId).pipe(
       catchError((error) =>{
         if (error.status === 404) {
-          this.message = error.error || 'User not found';
+          this.notificationService.showNotification('User not found', 'green', 3000, 'warning')
           this.isSuccess = false;
         } else {
-          this.message = `Unexpected error: ${error.status} -  ${error.message}`;
+          this.notificationService.showNotification('An error occurred during selling course bundle', 'green', 3000, 'error')
           this.isSuccess = false;
         }
         return of(null);
@@ -38,7 +37,7 @@ export class SellCourseBundleComponent {
     ).subscribe({
       next: (response) => {
         if (response){
-          this.message = 'Course bundle sold successfuly'
+          this.notificationService.showNotification('Course bundle sold successfully', 'green', 3000, 'success')
           this.isSuccess = true;
         }
       }

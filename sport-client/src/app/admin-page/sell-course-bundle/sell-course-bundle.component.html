@@ -5,10 +5,5 @@
     <input type="number" id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID" required>
     <button class="btn" (click)="sellBundle()">Sell Course Bundle</button>
   </div>
-
-  <!-- Display the success or error message -->
-  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
-    {{ message }}
-  </div>
 </div>
 

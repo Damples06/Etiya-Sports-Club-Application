@@ -14,15 +14,6 @@
     <button class="btn" (click)="fetchUsers()">Filter Users</button>
   </div>
 
-  <!-- Display the success or error message -->
-  <div
-    *ngIf="message"
-    class="alert"
-    [ngClass]="{ 'alert-success': isSuccess, 'alert-danger': !isSuccess }"
-  >
-    {{ message }}
-  </div>
-
   <!-- Table to Display Users -->
   <table class="users-by-remaining-course-table" *ngIf="users$ | async as users">
     <thead>

@@ -1,5 +1,4 @@
 <div class="form-container">
-  <h2 class="form-title">Register</h2>
   <form (ngSubmit)="saveUser()" #registerForm="ngForm" class="register-form">
     <div class="form-group">
       <label for="firstName" class="form-label">First Name</label>
@@ -51,7 +50,4 @@
     </div>
     <button class="btn btn-submit" type="submit">Register</button>
   </form>
-  <div *ngIf="notification" class="alert alert-info">
-    {{ notification }}
-  </div>
 </div>

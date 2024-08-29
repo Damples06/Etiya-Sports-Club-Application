@@ -3,6 +3,7 @@ import {FormsModule} from "@angular/forms";
 import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {Observable} from "rxjs";
 import {AdminService} from "../../service/admin.service";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-users-by-remaining-course',
@@ -20,10 +21,9 @@ import {AdminService} from "../../service/admin.service";
 export class UsersByRemainingCourseComponent implements OnInit{
   remainingCourses!: number;
   users$!: Observable<any[]>;
-  message!: string | null;
   isSuccess!: boolean;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     // Optionally, initialize with a default value if needed
@@ -36,21 +36,21 @@ export class UsersByRemainingCourseComponent implements OnInit{
       this.users$.subscribe({
         next: (response) => {
           if (response.length > 0) {
-            this.message = 'Users retrieved successfully!';
+            this.notificationService.showNotification('Users retrieved successfully!', 'green', 3000, 'success')
             this.isSuccess = true;
           } else {
-            this.message = 'No users found with the specified remaining courses.';
+            this.notificationService.showNotification('No users found with the specified remaining courses.', 'green', 3000, 'warning')
             this.isSuccess = false;
           }
         },
         error: (error) => {
           console.error('Error fetching users:', error);
-          this.message = `Error: ${error.status} - ${error.message}`;
+          this.notificationService.showNotification('An error occurred during searching', 'green', 3000, 'error')
           this.isSuccess = false;
         }
       });
     } else {
-      this.message = 'Please enter a valid number of remaining courses.';
+      this.notificationService.showNotification('Please enter a valid number of remaining courses.', 'green', 3000, 'info')
       this.isSuccess = false;
     }
   }

@@ -3,10 +3,6 @@
 
   <button class="btn btn-primary" (click)="fetchArrivals()">Load Arrivals</button>
 
-  <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">
-    {{ message }}
-  </div>
-
   <div *ngIf="showCalendar">
     <div class="calendar-grid">
       <div *ngFor="let day of daysInMonth" class="calendar-day">

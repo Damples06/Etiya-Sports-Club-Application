@@ -33,15 +33,12 @@ export class RegisterComponent {
     this.userService.register(this.user).subscribe({
       next: (response) => {
         console.log('User saved successfully', response);
-        this.notification = 'User saved successfully!';
         this.notificationService.showNotification('User saved successfully!', 'green', 3000, "success");
         this.userForm.resetForm();
-        setTimeout(() => this.notification = null, 3000); // Clear notification after 3 seconds
       },
       error: (error) => {
         console.error('Error saving user', error);
-        this.notification = 'Failed to save user. Please try again.';
-        setTimeout(() => this.notification = null, 3000); // Clear notification after 3 seconds
+        this.notificationService.showNotification('An error occurred during registering', 'red', 3000, "error");
       },
       complete: () => {
         console.log('User save process completed.');

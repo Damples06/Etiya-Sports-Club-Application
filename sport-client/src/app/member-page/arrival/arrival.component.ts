@@ -1,11 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {Arrival} from "../../models/arrival";
-import {catchError, Observable, of} from "rxjs";
 import {MemberService} from "../../service/member.service";
-import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {UserService} from "../../service/user.service";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-arrival',
@@ -22,38 +20,27 @@ import {UserService} from "../../service/user.service";
 export class ArrivalComponent {
   userId: number | null = null;
   arrivals: any[] = [];
-  message!: string;
 
-  constructor(private memberService: MemberService, private userService: UserService) {}
+  constructor(private memberService: MemberService, private userService: UserService, private notificationService: NotificationService) {}
 
   fetchArrivals() {
     this.userId = this.userService.getUserId();
     if (this.userId === null) {
-      this.message = 'User ID is not available. Please log in.';
+      this.notificationService.showNotification('User ID is not available. Please log in.', 'green', 3000, 'warning')
       return;
     }
 
-    this.memberService.getArrival(this.userId)
-      .pipe(
-        catchError((error) => {
-          if (error.status === 404) {
-            this.message = 'No arrivals found for the given User ID';
-          } else {
-            this.message = 'Error fetching arrivals';
-            console.error('Fetch Arrivals Error:', error);
-          }
-          return of([]);  // Return an empty array to the subscriber
-        })
-      )
-      .subscribe({
-        next: (response) => {
-          this.arrivals = response;
-          this.message = this.arrivals.length ? '' : 'No arrivals found';
-        },
-        error: (error) => {
-          this.message = 'Unexpected error occurred';
-          console.error('Unexpected Fetch Arrivals Error:', error);
-        }
-      });
+    this.memberService.getArrival(this.userId).subscribe({
+      next: (response) => {
+        this.arrivals = response;
+        this.notificationService.showNotification('Arrivals retrieved successfully!', 'green', 3000, 'success')
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          this.notificationService.showNotification('Arrivals not found!', 'green', 3000, 'info')
+        } else
+          this.notificationService.showNotification('An error occurred during fetching arrivals', 'green', 3000, 'error')
+      }
+    });
   }
 }
