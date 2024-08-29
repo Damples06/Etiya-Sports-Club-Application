@@ -4,6 +4,7 @@ import com.etiya.sportsClubApplication.dto.LoginDto;
 import com.etiya.sportsClubApplication.dto.RegisterDto;
 import com.etiya.sportsClubApplication.entity.Role;
 import com.etiya.sportsClubApplication.entity.User;
+import com.etiya.sportsClubApplication.exception.InvalidCredentialsException;
 import com.etiya.sportsClubApplication.exception.RoleNotFoundException;
 import com.etiya.sportsClubApplication.exception.UserExistException;
 import com.etiya.sportsClubApplication.exception.UserNotFoundException;
@@ -43,7 +44,7 @@ public class UserService {
         User user = userRepository.findByEmail(loginDto.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         if (user == null ||  !passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new InvalidCredentialsException("Email or password is incorrect");
         }
         return
                 jwtUtil.generateToken(user);

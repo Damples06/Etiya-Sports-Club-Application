@@ -12,3 +12,4 @@ spring:
     show-sql: true
 server:
   port: 7575
+  address: 0.0.0.0

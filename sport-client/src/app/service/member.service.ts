@@ -6,7 +6,7 @@ import {response} from "express";
   providedIn: 'root'
 })
 export class MemberService {
-  private apiUrl = `http://localhost:7575/member`;  // Base URL for your API
+  private apiUrl = `http://192.168.0.34:7575/member`;  // Base URL for your API
 
   constructor(private http: HttpClient) {}
 

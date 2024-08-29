@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {Observable, of} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import { User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:7575/user';
+  private apiUrl = 'http://192.168.0.34:7575/user';
+
+  private loginStatusChangedSubject = new Subject<void>();
+  loginStatusChanged = this.loginStatusChangedSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -22,5 +25,9 @@ export class UserService {
   getUserId(): number | null {
     const userId = localStorage.getItem('userId');
     return userId ? +userId : null;  // Convert userId to number, or return null if not found
+  }
+
+  notifyLoginStatusChange() {
+    this.loginStatusChangedSubject.next();
   }
 }

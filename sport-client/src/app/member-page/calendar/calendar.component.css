@@ -1,0 +1,8 @@
+.form-control {
+  padding: 5px;
+  margin-left: 5px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  font-size: 16px;
+  width: 20%;
+}

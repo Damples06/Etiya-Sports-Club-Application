@@ -1,26 +1,32 @@
 <div class="container">
   <h2>Get Calendar</h2>
   <div class="form-group">
-<!--    <input id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID" required>-->
     <button class="btn btn-primary" (click)="fetchCalendar()">Get Calendar</button>
   </div>
   <div *ngIf="message" class="alert alert-danger">{{ message }}</div>
 
-  <div class="form-group mt-3">
-    <label for="statusFilter">Filter By Status:</label>
-    <select id="statusFilter" class="form-control" [(ngModel)]="selectedStatus" (change)="filterCalendar()">
-      <option value="">All</option>
-      <option value="ACTIVE">Active</option>
-      <option value="PASSIVE">Passive</option>
-    </select>
-  </div>
+<!--  <div class="form-group mt-3">-->
+<!--    <label for="statusFilter">Filter By Status:</label>-->
+<!--    <select id="statusFilter" class="form-control" [(ngModel)]="selectedStatus" (change)="filterCalendar()">-->
+<!--      <option value="">All</option>-->
+<!--      <option value="ACTIVE">Active</option>-->
+<!--      <option value="PASSIVE">Passive</option>-->
+<!--    </select>-->
+<!--  </div>-->
 
   <table class="table" *ngIf="filteredCalendar.length">
     <thead>
     <tr>
       <th>Arrival ID</th>
       <th>Date</th>
-      <th>Status</th>
+      <th>
+        Status
+        <select id="statusFilter" class="form-control" [(ngModel)]="selectedStatus" (change)="filterCalendar()">
+          <option value="">All</option>
+          <option value="ACTIVE">Active</option>
+          <option value="PASSIVE">Passive</option>
+        </select>
+      </th>
     </tr>
     </thead>
     <tbody>

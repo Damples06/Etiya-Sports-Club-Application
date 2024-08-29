@@ -1,18 +1,22 @@
 <div class="navbar">
-<!--  <button routerLink="/users" class="nav-button">View Users</button>-->
-<!--  <button routerLink="/saveUser" class="nav-button">Save User</button>-->
-<!--  <button routerLink="/login" class="nav-button">Login</button>-->
-<!--  <button routerLink="/admin" class="nav-button">Admin Page</button>-->
-<!--  <button routerLink="/member" class="nav-button">Member Page</button>-->
-<!--  <button routerLink="/register" class="nav-button">Register Page</button>-->
-<!--  <button routerLink="/login" class="nav-button">Login Page</button>-->
+  <img priority class="logo" ngSrc="/etiya.svg" width="165" height="40" alt="Etiya">
   <ul>
     <li><a routerLink="/admin">Admin Page</a></li>
     <li><a routerLink="/member">Member Page</a></li>
-    <li><a routerLink="/register">Register Page</a></li>
-    <li><a routerLink="/login">Login Page</a></li>
-
+  </ul>
+  <ul>
+    <li class="profile-menu" (click)="toggleMenu()">
+      Profile
+      <ul class="dropdown-menu" [ngClass]="{'show': isMenuOpen}">
+        <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
+        <li *ngIf="!isLoggedIn"><a routerLink="/register">Register</a></li>
+        <li *ngIf="isLoggedIn"><a routerLink="/profile">Profile</a></li>
+        <li *ngIf="isLoggedIn"><a (click)="signOut()">Sign Out</a></li>
+      </ul>
+    </li>
   </ul>
 </div>
-
-<router-outlet></router-outlet>
+<div class="router-outlet-container">
+  <router-outlet></router-outlet>
+</div>
+<app-notification></app-notification>

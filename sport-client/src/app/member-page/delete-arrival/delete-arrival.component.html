@@ -1,8 +1,7 @@
 <div class="container">
   <h2>Delete Arrival</h2>
-  <div class="form-group">
-<!--    <input id="userId" class="form-control" [(ngModel)]="userId" placeholder="Enter User ID" required>-->
-    <input id="arrivalId" class="form-control" [(ngModel)]="arrivalId" placeholder="Enter Arrival ID" required>
+  <div>
+    <input type="number" id="arrivalId" class="form-control" [(ngModel)]="arrivalId" placeholder="Enter Arrival ID" required>
     <button class="btn btn-primary" (click)="deleteArrival()">Delete Arrival</button>
   </div>
   <div *ngIf="message" class="alert" [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}">

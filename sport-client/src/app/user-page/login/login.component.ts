@@ -3,6 +3,7 @@ import {FormsModule, NgForm} from "@angular/forms";
 import {UserService} from "../../service/user.service";
 import {NgIf} from "@angular/common";
 import {User} from "../../models/user";
+import {NotificationService} from "../../service/notification.service";
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent {
   errorMessage: string | null = null;
   notification: string | null = null;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private notificationService: NotificationService) {}
 
   onSubmit() {
     this.userService.login(this.model).subscribe({
@@ -33,15 +34,21 @@ export class LoginComponent {
           if (token) {
             localStorage.setItem('authToken', token);
             localStorage.setItem('userId', userId.toString());  // Save userId to local storage
-            this.notification = 'Login successfully!';
+            this.notificationService.showNotification('login successfully!', 'orange', 3000, "success");
+            this.userService.notifyLoginStatusChange();
           } else {
             this.notification = 'Failed to login. No token received';
           }
         }
       },
       error: (error) => {
-        console.error('login error', error);
-        this.notification = 'Failed to login. Please try again.';
+        console.log('Error status:', error.status)
+        if (error.status == 400) {
+          this.notificationService.showNotification('Email or password is incorrect', 'orange', 3000, "warning");
+        } else {
+          console.error('login error', error);
+          this.notificationService.showNotification('An error occured during logging in', 'red', 3000, "error");
+        }
       }
     });
   }

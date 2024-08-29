@@ -9,7 +9,7 @@ import {Arrival} from "../models/arrival";
   providedIn: 'root'
 })
 export class AdminService {
-  private apiUrl = "http://localhost:7575/admin";
+  private apiUrl = "http://192.168.0.34:7575/admin";
 
   constructor(private http: HttpClient) { }
 

@@ -2,15 +2,16 @@
   <h2>Users by Remaining Course</h2>
 
   <!-- Input for Filtering by Remaining Courses -->
-  <div class="form-group">
+  <div>
     <input
+      type="number"
       id="remainingCourses"
       class="form-control"
       [(ngModel)]="remainingCourses"
       placeholder="Enter value of remaining courses"
       required
     />
-    <button class="btn btn-primary" (click)="fetchUsers()">Filter Users</button>
+    <button class="btn" (click)="fetchUsers()">Filter Users</button>
   </div>
 
   <!-- Display the success or error message -->
