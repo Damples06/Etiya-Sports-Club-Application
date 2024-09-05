@@ -1,7 +1,7 @@
 package com.etiya.sportsClubApplication.exception;
 
 public class UserExistException extends RuntimeException{
-    public UserExistException(String message) {
-        super(message);
+    public UserExistException() {
+        super("User already exist");
     }
 }

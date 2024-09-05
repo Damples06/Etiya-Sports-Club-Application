@@ -38,7 +38,7 @@ export class RegisterComponent {
       },
       error: (error) => {
         console.error('Error saving user', error);
-        this.notificationService.showNotification('An error occurred during registering', 'red', 3000, "error");
+        this.notificationService.showNotification(error.error, 'red', 3000, "error");
       },
       complete: () => {
         console.log('User save process completed.');

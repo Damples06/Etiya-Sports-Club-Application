@@ -34,7 +34,7 @@ public class AdminController {
     }
 
     @PostMapping("/sellCourseBundle")
-    public ResponseEntity<String> sellCourseBundleToUser(@RequestParam @Min(1) Long userId) {
+    public ResponseEntity<String> sellCourseBundleToUser(@RequestParam @Min(1) @NotNull Long userId) {
         logger.info("Selling course bundle to user with id: {}", userId);
 
         //      This is a dummy course bundle with 10 courses. It will be changed in the future.

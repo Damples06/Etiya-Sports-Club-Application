@@ -4,6 +4,7 @@ import com.etiya.sportsClubApplication.dto.LoginDto;
 import com.etiya.sportsClubApplication.dto.LoginResponse;
 import com.etiya.sportsClubApplication.dto.RegisterDto;
 import com.etiya.sportsClubApplication.service.UserService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterDto registerDto) {
         logger.info("Registering user with email: {}", registerDto.getEmail());
 
         userService.register(registerDto);
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDto loginDto) {
         logger.info("Logging in user with email: {}", loginDto.getEmail());
 
         String token = userService.login(loginDto);

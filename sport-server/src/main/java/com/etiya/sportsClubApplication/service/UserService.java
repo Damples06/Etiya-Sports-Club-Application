@@ -29,7 +29,7 @@ public class UserService {
 
     public void register(RegisterDto registerDto) {
         if (userRepository.findByEmail(registerDto.getEmail()).isPresent()) {
-            throw new UserExistException("User already exists");
+            throw new UserExistException();
         }
 
         User user = userMapper.toEntity(registerDto);
