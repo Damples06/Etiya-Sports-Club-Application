@@ -8,6 +8,24 @@ The Etiya Sports Club Application is designed to manage sports club members, cou
 
 Developed during my internship at Etiya, the Etiya Sports Club Application is continuously updated as I learn new technologies and gain more experience. The purpose of the Etiya Sports Club Application is to manage sports club members, courses, and administrators effectively. It provides a comprehensive solution for tracking member information, course enrollments, and administrative tasks within a sports organization. The system supports role-based access and offers detailed insights into member participation and course status, helping sports club administrators efficiently manage club operations, including member registration, course management, and attendance tracking
 
+## Frontend Preview
+
+### Login Page
+
+![Login Page](images/Login-Page.png)
+
+### Register Page
+
+![Register Page](images/Register-Page.png)
+
+### Admin Page
+
+![Admin Page](images/Admin-Page.png)
+
+### Member Page
+
+![Member Page](images/Member-Page.png)
+
 ## Getting Started
 
 ### Dependencies
