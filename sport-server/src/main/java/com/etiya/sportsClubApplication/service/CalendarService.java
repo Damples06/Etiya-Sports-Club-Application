@@ -9,9 +9,13 @@ import com.etiya.sportsClubApplication.mapper.ArrivalMapper;
 import com.etiya.sportsClubApplication.repository.ArrivalRepository;
 import com.etiya.sportsClubApplication.repository.CourseBundleRepository;
 import com.etiya.sportsClubApplication.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
+import org.hibernate.Hibernate;
+import org.slf4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +27,7 @@ public class CalendarService {
     private final ArrivalRepository arrivalRepository;
     private final CourseBundleRepository courseBundleRepository;
     private final ArrivalMapper arrivalMapper;
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(CalendarService.class);
 
     public CalendarService(UserRepository userRepository, ArrivalRepository arrivalRepository, CourseBundleRepository courseBundleRepository, ArrivalMapper arrivalMapper) {
         this.userRepository = userRepository;
@@ -57,11 +62,14 @@ public class CalendarService {
 
 //  This method is used to update the status of the arrivals. If the date of the arrival is before the current date and the status of the arrival is active, the status of the arrival is updated to past.
     @Scheduled(cron = "0 0 0 * * *")
+    @PostConstruct
     public void updateArrivalStatuses() {
+        logger.info("Updating arrival statuses");
         List<Arrival> arrivals = arrivalRepository.findAll();
         for (Arrival arrival : arrivals) {
             if (arrival.getDate().isBefore(LocalDate.now()) && arrival.getStatus().equals(Status.ACTIVE)) {
                 arrival.setStatus(Status.PAST);
+                arrivalRepository.save(arrival);
             }
         }
     }
